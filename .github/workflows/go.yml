@@ -2,7 +2,7 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, tylerTheEvil-patch-1 ]
   pull_request:
     branches: [ main ]
 
@@ -23,3 +23,36 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+
+    - name: Build deployment package
+      run: go build -o bin/application application.go
+
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
+
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+      
+      	// Remember the secrets we embedded? this is how we access them
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
+        // Replace the values here with your names you submitted in one of 
+        // The previous sections
+        application_name: go-rest-api
+        environment_name: Gorestapi-env
+        
+        // The version number could be anything. You can find a dynamic way 
+        // Of doing this.
+        version_label: 12348
+        region: "us-east-1"
+        deployment_package: deploy.zip

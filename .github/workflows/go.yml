@@ -46,5 +46,6 @@ jobs:
         application_name: go-rest-api-test
         environment_name: Gorestapi-env
         version_label: 2
+        use_existing_version_if_available: true
         region: "us-east-1"
         deployment_package: deploy.zip

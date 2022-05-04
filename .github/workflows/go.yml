@@ -43,8 +43,7 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
-        application_name: go-rest-api
+        application_name: go-rest-api-test
         environment_name: Gorestapi-env
-        version_label: 12348
         region: "us-east-1"
         deployment_package: deploy.zip

@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-deploy:
+  deploy:
     needs: [build]
     runs-on: ubuntu-latest
 

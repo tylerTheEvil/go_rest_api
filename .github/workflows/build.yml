@@ -1,4 +1,4 @@
-name: Go
+name: Build project
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +25,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: false
-        tags: ${{ github.event.repository.name }}:latest, ${{ github.repository }}:latest
+        tags: ${{ github.event.repository.name }}:latest, ${{ github.repository.name }}:latest
 
     - name: Test
       run: go test -v ./...
